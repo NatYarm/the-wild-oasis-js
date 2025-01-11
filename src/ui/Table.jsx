@@ -1,6 +1,8 @@
-import styled from "styled-components";
+import { createContext, useContext } from 'react';
+import { FcDataRecovery } from 'react-icons/fc';
+import styled from 'styled-components';
 
-const StyledTable = styled.div`
+const StyledTable = styled.table`
   border: 1px solid var(--color-grey-200);
 
   font-size: 1.4rem;
@@ -9,7 +11,7 @@ const StyledTable = styled.div`
   overflow: hidden;
 `;
 
-const CommonRow = styled.div`
+const CommonRow = styled.tr`
   display: grid;
   grid-template-columns: ${(props) => props.columns};
   column-gap: 2.4rem;
@@ -36,7 +38,7 @@ const StyledRow = styled(CommonRow)`
   }
 `;
 
-const StyledBody = styled.section`
+const StyledBody = styled.tbody`
   margin: 0.4rem 0;
 `;
 
@@ -58,3 +60,36 @@ const Empty = styled.p`
   text-align: center;
   margin: 2.4rem;
 `;
+
+const TableContext = createContext();
+
+function Table({ columns, children }) {
+  return (
+    <TableContext.Provider value={{ columns }}>
+      <StyledTable>{children}</StyledTable>
+    </TableContext.Provider>
+  );
+}
+
+function Header({ children }) {
+  const { columns } = useContext(TableContext);
+  return (
+    <StyledHeader as="thead" columns={columns}>
+      {children}
+    </StyledHeader>
+  );
+}
+function Row({ children }) {
+  const { columns } = useContext(TableContext);
+  return <StyledRow columns={columns}>{children}</StyledRow>;
+}
+function Body({ children }) {
+  return <StyledBody>{children}</StyledBody>;
+}
+
+Table.Header = Header;
+Table.Row = Row;
+Table.Body = Body;
+Table.Footer = Footer;
+
+export default Table;
