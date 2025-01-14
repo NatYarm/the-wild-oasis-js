@@ -3,6 +3,7 @@ import CabinRow from './CabinRow';
 import { useCabins } from './useCabins';
 import Table from '../../ui/Table';
 import Menus from '../../ui/Menus';
+import Empty from '../../ui/Empty';
 import { useSearchParams } from 'react-router-dom';
 
 const CabinTable = () => {
@@ -28,6 +29,8 @@ const CabinTable = () => {
   const sortedCabins = filteredCabins.sort(
     (a, b) => (a[field] - b[field]) * modifier
   );
+
+  if (!sortedCabins?.length) return <Empty resourceName="cabins" />;
 
   return (
     <Menus>
