@@ -25,13 +25,17 @@ function LoginForm() {
     );
   }
 
+  function handleDemoLogin() {
+    setEmail('test@test.com');
+    setPassword('!2345678');
+  }
+
   return (
     <Form onSubmit={handleSubmit}>
       <FormRowVertical label="Email address">
         <Input
           type="email"
           id="email"
-          // This makes this form better for password managers
           autoComplete="username"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
@@ -51,6 +55,29 @@ function LoginForm() {
       <FormRowVertical>
         <Button size="large" disabled={isPending}>
           {!isPending ? 'Log in' : <SpinnerMini />}
+        </Button>
+      </FormRowVertical>
+
+      {/* demo credentials section */}
+      <FormRowVertical>
+        <p
+          style={{
+            margin: '0 0 0.5rem 0',
+            fontWeight: '600',
+            color: '#0369a1',
+          }}
+        >
+          Demo Account
+        </p>
+        <p style={{ margin: '0.25rem 0', fontSize: '0.875rem' }}>
+          <strong>Email:</strong> test@test.com
+        </p>
+        <p style={{ margin: '0.25rem 0 0.75rem 0', fontSize: '0.875rem' }}>
+          <strong>Password:</strong> !2345678
+        </p>
+
+        <Button size="large" disabled={isPending}>
+          {!isPending ? 'Use Demo Account' : <SpinnerMini />}
         </Button>
       </FormRowVertical>
     </Form>
